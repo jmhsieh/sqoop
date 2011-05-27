@@ -643,6 +643,25 @@ public abstract class ManagerCompatTestCase extends ImportJobTestCase {
     verifyType("VARCHAR(32)", "NULL", null);
   }
 
+
+  @Test
+  public void testNVarCharStringCol1() {
+    verifyType("NVARCHAR(32)", STRING_VAL_IN, STRING_VAL_OUT);
+  }
+
+  
+  @Test
+  public void testNVarCharEmptyStringCol() {
+    verifyType("NVARCHAR(32)", "''", "");
+  }
+
+  @Test
+  public void testNVarCharNullStringCol() {
+    verifyType("NVARCHAR(32)", "NULL", null);
+  }
+
+
+  
   @Test
   public void testInt() {
     verifyType("INTEGER", "42", "42");
