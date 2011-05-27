@@ -247,4 +247,10 @@ public class TestSqlManager extends TestCase {
     assertEquals("Expected null pkey for table without key", primaryKey,
         KEY_FIELD_NAME);
   }
+  
+  @Test
+  public void testToJavaType()  {
+    SqlManager man = (SqlManager)manager;
+    assertEquals("String", man.toJavaType(Types.NVARCHAR));
+  }
 }
