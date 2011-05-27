@@ -491,6 +491,8 @@ public abstract class SqlManager extends ConnManager {
       return "Integer";
     } else if (sqlType == Types.VARCHAR) {
       return "String";
+    } else if (sqlType == Types.NVARCHAR) {
+      return "String";
     } else if (sqlType == Types.CHAR) {
       return "String";
     } else if (sqlType == Types.LONGVARCHAR) {
