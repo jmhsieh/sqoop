@@ -134,6 +134,12 @@ public abstract class ManagerCompatTestCase extends ImportJobTestCase {
     return true;
   }
 
+  /** @return true if the database under test has a NVARCHAR type */
+  protected boolean supportsNVarChar() {
+    return false; // this is not in HSQLDB, or MySQL
+  }
+
+  
   /** @return true if the database under test has a VARBINARY type */
   protected boolean supportsVarBinary() {
     return true;
@@ -643,25 +649,28 @@ public abstract class ManagerCompatTestCase extends ImportJobTestCase {
     verifyType("VARCHAR(32)", "NULL", null);
   }
 
-
   @Test
   public void testNVarCharStringCol1() {
-    verifyType("NVARCHAR(32)", STRING_VAL_IN, STRING_VAL_OUT);
+    if (supportsNVarChar()) {
+      verifyType("NVARCHAR(32)", STRING_VAL_IN, STRING_VAL_OUT);
+    }
   }
 
   
   @Test
   public void testNVarCharEmptyStringCol() {
-    verifyType("NVARCHAR(32)", "''", "");
+    if (supportsNVarChar()) {
+      verifyType("NVARCHAR(32)", "''", "");
+    }
   }
 
   @Test
   public void testNVarCharNullStringCol() {
-    verifyType("NVARCHAR(32)", "NULL", null);
+    if (supportsNVarChar()) {
+      verifyType("NVARCHAR(32)", "NULL", null);
+    }
   }
 
-
-  
   @Test
   public void testInt() {
     verifyType("INTEGER", "42", "42");
