@@ -136,7 +136,9 @@ public abstract class ManagerCompatTestCase extends ImportJobTestCase {
 
   /** @return true if the database under test has a NVARCHAR type */
   protected boolean supportsNVarChar() {
-    return false; // this is not in HSQLDB, or MySQL
+    // this is not in HSQLDB, MySQL, or Postgres, but in MS SqlServer, 
+    // and others
+    return false;
   }
 
   
