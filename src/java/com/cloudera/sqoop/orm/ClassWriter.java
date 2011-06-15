@@ -1057,22 +1057,7 @@ public class ClassWriter {
 
     // Translate all the column names into names that are safe to
     // use as identifiers.
-    String [] cleanedColNames = cleanColNames(colNames);
-    Set<String> uniqColNames = new HashSet<String>();
-    for (int i = 0; i < colNames.length; i++) {
-      // Guarantee uniq col identifier
-      String identifier = cleanedColNames[i];
-      if (uniqColNames.contains(identifier)) {
-          throw new IllegalArgumentException("Duplicate Column identifier "
-              + "specified: '" + identifier + "'");
-      }
-      uniqColNames.add(identifier);
-
-      // Make sure the col->type mapping holds for the
-      // new identifier name, too.
-      String col = colNames[i];
-      columnTypes.put(identifier, columnTypes.get(col));
-    }
+    String[] cleanedColNames = translateColumnIds(columnTypes, colNames);
 
     // The db write() method may use column names in a different
     // order. If this is set in the options, pull it out here and
@@ -1165,6 +1150,36 @@ public class ClassWriter {
         }
       }
     }
+  }
+
+
+  /**
+   * Translates column names into clean for java id's and verifies that colnames
+   * are unique.  The columnTypes is populated with the names.
+   *
+   * @param columnTypes
+   * @param colNames
+   * @return
+   */
+   private String[] translateColumnIds(Map<String, Integer> columnTypes,
+      String[] colNames) {
+    String [] cleanedColNames = cleanColNames(colNames);
+    Set<String> uniqColNames = new HashSet<String>();
+    for (int i = 0; i < colNames.length; i++) {
+      // Guarantee uniq col identifier
+      String identifier = cleanedColNames[i];
+      if (uniqColNames.contains(identifier)) {
+          throw new IllegalArgumentException("Duplicate Column identifier "
+              + "specified: '" + identifier + "'");
+      }
+      uniqColNames.add(identifier);
+
+      // Make sure the col->type mapping holds for the
+      // new identifier name, too.
+      String col = colNames[i];
+      columnTypes.put(identifier, columnTypes.get(col));
+    }
+    return cleanedColNames;
   }
 
   /**
